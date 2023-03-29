@@ -75,14 +75,14 @@ Here is a program flow for TaskMaster, a Todo list application:
 Here are the packages that are needed for the 20 features of TaskMaster in Flutter using provider, shared_preferences, firebase, and hive:
 
 1. `provider`: Used for state management and sharing data between widgets.
-2. `Shared_preferences`: Used for storing and retrieving simple data such as task lists, notes, and preferences.
+2. `shared_preferences`: Used for storing and retrieving simple data such as task lists, notes, and preferences.
 3. `firebase_core`: Used for configuring Firebase services in the app.
 4. `cloud_firestore`: Used for storing and retrieving more complex data such as user accounts, task assignments, and comments.
 5. `firebase_auth`: Used for user authentication and authorization.
 6. `intl`: Used for formatting dates and times based on the user's locale.
 7. `flutter_datetime_picker`: Used for selecting due dates and times for tasks.
 8. `flutter_slidable`: Used for adding swipe actions to task items, such as marking them as completed or deleting them.
-9. `flutter_staggered_grid_view`: Used for displaying task lists in a grid layout.
+9. `flutter_staggered_animations`: Used for displaying task lists in a grid layout.
 10. `animated_text_kit`: Used for animating text elements in the app, such as task titles and labels.
 11. `flutter_speed_dial`: Used for creating floating action buttons that provide quick access to frequently used tasks.
 12. `flutter_svg`: Used for displaying SVG icons and images in the app.
@@ -93,3 +93,4 @@ Here are the packages that are needed for the 20 features of TaskMaster in Flutt
 17. `firebase_analytics`: Used for tracking user interactions with the app for analytics purposes.
 18. `Google_fonts`: Used for displaying custom fonts in the app.
 19. `flutter_keyboard_visibility`: Used for detecting when the keyboard is visible to adjust the layout of the app accordingly.
+
