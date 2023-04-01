@@ -24,6 +24,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create : (context) => SettingsProvider()
         ),
+        
       ],
       child : const TaskMasterApp()
     )
