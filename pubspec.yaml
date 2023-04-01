@@ -54,6 +54,9 @@ dependencies:
   firebase_analytics: ^10.1.6
   google_fonts: ^4.0.3
   flutter_keyboard_visibility: ^5.4.0
+  flutter_launcher_icons: ^0.12.0
+  flutter_native_splash: ^2.2.19
+  flutter_feather_icons: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +81,14 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/svg/Logo.svg
+    - assets/svg/Tutorial1.svg
+    - assets/svg/Tutorial2.svg
+    - assets/svg/Tutorial3.svg
+    
+
+    - assets/images/Logo.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -107,3 +117,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  color: "#ffffff"
+  color_dark: "#141414"
+  image: assets/images/Logo.png
+  web: false

@@ -3,6 +3,7 @@ import "package:firebase_core/firebase_core.dart";
 import "package:provider/provider.dart";
 
 
+
 import "package:taskmaster/const/light_theme_const.dart";
 import "package:taskmaster/const/dark_theme_const.dart";
 
@@ -53,7 +54,7 @@ class TaskMasterApp extends StatelessWidget {
         ThemeMode.dark,
 
       home : (isFirstInstall) ? 
-        const OnboardView() :
+        OnboardView() :
         const AuthView()
     );
   }
