@@ -11,12 +11,6 @@ class HomeView extends StatelessWidget {
     final SettingsProvider settingsProvider = 
       Provider.of<SettingsProvider>(context);
       
-    return _appBuilder(
-      settingsProvider
-    );
-  }
-
-  Widget _appBuilder(SettingsProvider settingsProvider){
     return Scaffold(
       body : Center(
         child : Switch(
