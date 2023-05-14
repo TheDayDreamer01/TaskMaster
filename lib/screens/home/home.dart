@@ -8,16 +8,10 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settingsProvider = 
-      Provider.of<SettingsProvider>(context);
-      
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
+    
     return Scaffold(
-      body : Center(
-        child : Switch(
-          value : settingsProvider.getBoolPreference("isLight"),
-          onChanged: (value) => settingsProvider.setBoolPreference("isLight", value)
-        )
-      )
+      appBar: AppBar(),
     );
   }
 }

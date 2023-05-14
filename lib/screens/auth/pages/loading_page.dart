@@ -7,7 +7,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context){
     return const Scaffold(
       body : Center(
-        child : Text("Loading Page")
+        child : Text("Loading Page", style : TextStyle(color : Colors.red))
       )
     );
   }

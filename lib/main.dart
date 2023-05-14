@@ -4,17 +4,17 @@ import "package:flutter/services.dart";
 import "package:provider/provider.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:taskmaster/screens/onboard/pages/error_page.dart";
 
-import "package:taskmaster/screens/onboard/pages/loading_page.dart";
 import "package:taskmaster/consts/dark_theme_const.dart";
 import "package:taskmaster/consts/light_theme_const.dart";
+
 import "package:taskmaster/providers/auth_provider.dart";
-
 import "package:taskmaster/providers/settings_provider.dart";
-import "package:taskmaster/screens/home/home.dart";
-import "package:taskmaster/screens/onboard/pages/nowifi_page.dart";
+import "package:taskmaster/screens/auth/auth.dart";
 
+import "package:taskmaster/screens/auth/pages/error_page.dart";
+import "package:taskmaster/screens/auth/pages/nowifi_page.dart";
+import "package:taskmaster/screens/auth/pages/loading_page.dart";
 
 Future<void> main() async {
 
@@ -36,8 +36,6 @@ Future<void> main() async {
           create : (context) => AuthProvider()
         ),
 
-
-      
       ],
       child : const TaskMasterApp()
     )
@@ -58,6 +56,7 @@ class TaskMasterApp extends StatelessWidget{
 
           return Consumer<AuthProvider>(
             builder: (context, authProvider, child) {
+              
               return _mainAppBuilder(
                 authProvider : authProvider, 
                 settingsProvider : settingsProvider
@@ -101,19 +100,17 @@ class TaskMasterApp extends StatelessWidget{
 
         if (snapshot.data == ConnectivityResult.none){
           return const NoWifiPage();
-
-        }else if (snapshot.hasData) {
-          return FutureBuilder(
-            future : Firebase.initializeApp(),
-            builder : (context, snapshot){
-              return const HomeView();
-            }
-          );
-
-        } else if (snapshot.hasError) {
+        }
+        
+        else if (snapshot.hasData) {
+          return const AuthView();
+        }
+        
+        else if (snapshot.hasError) {
           return const ErrorPage();
-          
-        } else {
+        }
+        
+        else {
           return const LoadingPage();
         }
       }
