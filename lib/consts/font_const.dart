@@ -5,7 +5,7 @@ import "package:google_fonts/google_fonts.dart";
 
 Text robotoCondensed(String text, {
   Color ? color,
-  double fontSize = 16,
+  double fontSize = 18,
   FontWeight fontWeight = FontWeight.normal
 }) => Text(
   text,
@@ -18,7 +18,7 @@ Text robotoCondensed(String text, {
 
 Text openSans(String text, {
   Color ? color, 
-  double fontSize = 14,
+  double fontSize = 16,
   FontWeight fontWeight = FontWeight.normal
 }) => Text(
   text,

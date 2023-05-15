@@ -5,6 +5,8 @@ import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
 
 import "package:taskmaster/consts/font_const.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
+import "package:taskmaster/widgets/TaskMasterNavigator.dart";
+import "package:taskmaster/screens/auth/pages/signup_page.dart";
 
 
 class OnboardPage extends StatelessWidget {
@@ -48,16 +50,16 @@ class OnboardPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
 
                 children : AnimationConfiguration.toStaggeredList(
-                  duration : const Duration(milliseconds: 400),
+                  duration : const Duration(milliseconds: 375),
                   childAnimationBuilder: (widget) => SlideAnimation(
                     verticalOffset: 40.0,
                     child : FadeInAnimation(                       
-                      duration : const Duration(milliseconds: 800),
+                      duration : const Duration(milliseconds: 750),
                       child : widget 
                     )
                   ),
             
-                  children: _onboardBuilder()
+                  children: _onboardBuilder(context)
                 )
               ),
             ),
@@ -67,7 +69,7 @@ class OnboardPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _onboardBuilder(){
+  List<Widget> _onboardBuilder(BuildContext context){
     return [
       robotoCondensed(
         "Welcome to TaskMaster:\nYour Ultimate Todo App",
@@ -80,12 +82,12 @@ class OnboardPage extends StatelessWidget {
       openSans(
         "Streamline your tasks, stay organized, and boost\nproductivity with TaskMaster. Get started now!",
         color : Colors.grey[400],
-        fontSize : 16
       ),
 
       SizedBox(height : 40.h), 
       TaskMasterButton(
         taskMasterOnTap: (){
+
         },
         taskMasterColor: Colors.white,
         taskMasteraddBoxShadow: true,
@@ -109,9 +111,10 @@ class OnboardPage extends StatelessWidget {
 
       SizedBox( height : 16.h ),
       TaskMasterButton(
-        taskMasterOnTap: (){
-
-        },
+        taskMasterOnTap: () =>TaskMasterNavigation.pSlideUpTransition(
+          context, 
+          destinationPage: const SignUpPage()
+        ),
         taskMasterBorderColor: Colors.white,
         taskMasterChild: openSans(
           "Get Started!",

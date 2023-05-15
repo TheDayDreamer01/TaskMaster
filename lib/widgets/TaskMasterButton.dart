@@ -43,8 +43,8 @@ class TaskMasterButton extends StatelessWidget {
               if (taskMasteraddBoxShadow) ... [
                 BoxShadow(
                   color : Colors.black.withOpacity(.2),
-                  blurRadius: 14,
-                  offset: const Offset(0,2),
+                  blurRadius: 10,
+                  offset: const Offset(0,4),
                 )
               ]
             ]
