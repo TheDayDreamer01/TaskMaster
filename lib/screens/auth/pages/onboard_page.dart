@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:flutter_staggered_animations/flutter_staggered_animations.dart"; 
+import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
+import "package:google_fonts/google_fonts.dart";
+import "package:taskmaster/consts/color_const.dart"; 
 
 import "package:taskmaster/consts/font_const.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
@@ -54,7 +56,7 @@ class OnboardPage extends StatelessWidget {
                   childAnimationBuilder: (widget) => SlideAnimation(
                     verticalOffset: 40.0,
                     child : FadeInAnimation(                       
-                      duration : const Duration(milliseconds: 750),
+                      duration : const Duration(milliseconds: 600),
                       child : widget 
                     )
                   ),
@@ -71,17 +73,32 @@ class OnboardPage extends StatelessWidget {
 
   List<Widget> _onboardBuilder(BuildContext context){
     return [
-      robotoCondensed(
-        "Welcome to TaskMaster:\nYour Ultimate Todo App",
-        fontSize: 30,
-        fontWeight: FontWeight.w600,
-        color : Colors.white
+
+      RichText(
+        text : TextSpan(
+          children : [
+            const TextSpan( text : "Welcome to " ),
+            TextSpan( 
+              text : "TaskMaster\n",
+              style :  TextStyle(
+                color : TaskMasterColor.coralRed
+              )
+            ),
+
+            const TextSpan( text : "Your Ultimate Todo App"),
+          ],
+          style : GoogleFonts.robotoCondensed(
+            fontSize : 30,
+            fontWeight: FontWeight.w600,
+            color : TaskMasterColor.white
+          )
+        )
       ),
 
       SizedBox( height : 10.h),
       openSans(
         "Streamline your tasks, stay organized, and boost\nproductivity with TaskMaster. Get started now!",
-        color : Colors.grey[400],
+        color : TaskMasterColor.lightGrey
       ),
 
       SizedBox(height : 40.h), 
@@ -89,7 +106,7 @@ class OnboardPage extends StatelessWidget {
         taskMasterOnTap: (){
 
         },
-        taskMasterColor: Colors.white,
+        taskMasterColor: TaskMasterColor.white,
         taskMasteraddBoxShadow: true,
         taskMasterChild: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -102,8 +119,7 @@ class OnboardPage extends StatelessWidget {
             openSans(
               "Continue with Google",
               fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color : Colors.grey[900]
+              fontWeight: FontWeight.w500
             )
           ]
         )
@@ -115,12 +131,12 @@ class OnboardPage extends StatelessWidget {
           context, 
           destinationPage: const SignUpPage()
         ),
-        taskMasterBorderColor: Colors.white,
+        taskMasterBorderColor: TaskMasterColor.white,
         taskMasterChild: openSans(
           "Get Started!",
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color : Colors.white
+          color : TaskMasterColor.white
         )
       )
     ];

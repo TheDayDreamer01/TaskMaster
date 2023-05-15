@@ -7,26 +7,28 @@ class TaskMasterFormField extends StatelessWidget {
   
   final TextEditingController taskMasterFormController;
   final String taskMasterHintText;
-  final bool taskMasterEnableBorders;
+  final bool taskMasterIsFilled;
+  final bool taskMasterIsObsecure;
   final int taskMasterMaxLines;
-  final double taskMasterBorderRadius;
 
-  final FocusNode ? taskMasterFocusNode;
+  final Color ? taskMasterFillColor;
   final TextInputType ? taskMasterTextInputType;
 
   final String? Function(String?) ? taskMasterOnValidate;
+  final Widget ? taskMasterSuffix;
 
   const TaskMasterFormField({ 
     Key ? key,
     required this.taskMasterFormController,
     this.taskMasterHintText = "",
     this.taskMasterMaxLines = 1,
-    this.taskMasterEnableBorders = true,
+    this.taskMasterIsFilled = false,
+    this.taskMasterIsObsecure = false,
     this.taskMasterTextInputType,
-    this.taskMasterFocusNode,
-    this.taskMasterBorderRadius = 10,
+    this.taskMasterFillColor,
 
-    this.taskMasterOnValidate
+    this.taskMasterOnValidate,
+    this.taskMasterSuffix
 
   }) : super(key : key);
 
@@ -36,12 +38,12 @@ class TaskMasterFormField extends StatelessWidget {
       height : 60.h,
 
       child : TextFormField(
+        obscureText: taskMasterIsObsecure,
         controller : taskMasterFormController,  
         validator: taskMasterOnValidate,
 
         maxLines: taskMasterMaxLines,
         keyboardType: taskMasterTextInputType ,
-        focusNode: taskMasterFocusNode,
 
         style: GoogleFonts.openSans(
           fontSize : 16.sp,
@@ -49,17 +51,18 @@ class TaskMasterFormField extends StatelessWidget {
         ),
 
         decoration : InputDecoration(
+          filled: taskMasterIsFilled,
+
+          alignLabelWithHint: true,
           hintText : taskMasterHintText,
-          
+          fillColor: taskMasterFillColor,
+
+          suffixIcon: taskMasterSuffix,
+        
           hintStyle: GoogleFonts.openSans(
             fontSize : 16.sp
           ),
 
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              taskMasterBorderRadius,
-            ),
-          ),
         )
       )
     );
