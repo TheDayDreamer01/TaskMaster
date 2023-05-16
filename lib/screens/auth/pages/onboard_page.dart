@@ -1,11 +1,15 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:flutter_svg/flutter_svg.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
 import "package:google_fonts/google_fonts.dart";
-import "package:taskmaster/consts/color_const.dart"; 
 
+import "package:taskmaster/consts/color_const.dart"; 
 import "package:taskmaster/consts/font_const.dart";
+
+import "package:taskmaster/providers/auth_provider.dart";
+import "package:taskmaster/screens/auth/auth_builder.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:taskmaster/widgets/TaskMasterNavigator.dart";
 import "package:taskmaster/screens/auth/pages/signup_page.dart";
@@ -72,6 +76,8 @@ class OnboardPage extends StatelessWidget {
   }
 
   List<Widget> _onboardBuilder(BuildContext context){
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return [
 
       RichText(
@@ -104,7 +110,15 @@ class OnboardPage extends StatelessWidget {
       SizedBox(height : 40.h), 
       TaskMasterButton(
         taskMasterOnTap: (){
-
+          
+          authProvider.signInWithGoogle();
+          
+          TaskMasterNavigation.prSlideUpTransition(
+            context, 
+            destinationPage: const AuthViewBuilder(
+              currentPage: OnboardPage()
+            )
+          );
         },
         taskMasterColor: TaskMasterColor.white,
         taskMasteraddBoxShadow: true,
