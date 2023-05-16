@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
-import "package:taskmaster/consts/color_const.dart";
-import "package:taskmaster/consts/font_const.dart";
-import "package:taskmaster/screens/auth/pages/forgot_password_page.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
+
+import "package:taskmaster/consts/color_const.dart";
+import "package:taskmaster/consts/font_const.dart";
 
 import "package:taskmaster/widgets/TaskMasterFormField.dart";
 import "package:taskmaster/screens/auth/pages/signin_page.dart";
@@ -22,6 +22,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
 
   bool _isReveal = true;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _userNameController = TextEditingController(text : "");
   final TextEditingController _emailController = TextEditingController(text : "");
@@ -42,29 +44,30 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar : AppBar(),
 
-      body : Padding(
+      body : SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: 18.w, 
           vertical: 30.h
         ),
-
-        child: SingleChildScrollView(
-          child: AnimationLimiter(
+        
+        child: AnimationLimiter(
+          child: Form(
+            key : _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-
+          
               children : AnimationConfiguration.toStaggeredList(
                 duration : const Duration(milliseconds: 375),
-        
+                
                 childAnimationBuilder : (widget) => SlideAnimation(
                   verticalOffset: 40.0,
-        
+                
                   child : FadeInAnimation(
-                    duration : const Duration(milliseconds: 600),
+                    duration : const Duration(milliseconds: 480),
                     child : widget 
                   )
                 ),
-        
+                
                 children : _appBuilder()
               ),
             ),
@@ -95,17 +98,38 @@ class _SignUpPageState extends State<SignUpPage> {
         taskMasterHintText: "Username",
         taskMasterIsFilled: true,
         taskMasterFillColor: TaskMasterColor.silver[50],
+        taskMasterOnValidate: (value){
+          if (value == null || value.isEmpty){
+            return "Please Enter a Username";
+          } else if (value.length < 3 ) {
+            return "Username must be at least 3 Characters Long";
+          } else {
+            return null;
+          }
+        },
       ),
-    
+
       SizedBox( height : 16.h ),
       TaskMasterFormField(
         taskMasterFormController: _emailController,
         taskMasterHintText: "Email Address",
         taskMasterIsFilled: true,
         taskMasterFillColor: TaskMasterColor.silver[50],
+        taskMasterOnValidate: (value){
+          String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+          final regExp = RegExp(pattern);
+
+          if (value == null || value.isEmpty){
+            return "Please Enter an Email Address";
+          } else if (!regExp.hasMatch(value)){
+            return "Please Enter a valid Email Address";
+          } else {
+            return null;
+          }
+        },
       ),
       
-      SizedBox( height : 16.h ),
+      SizedBox( height : 20.h ),
       TaskMasterFormField(
         taskMasterIsObsecure: _isReveal,
         taskMasterFormController: _passwordController,
@@ -121,9 +145,18 @@ class _SignUpPageState extends State<SignUpPage> {
             color : TaskMasterColor.silver[900]
           )
         ),
+        taskMasterOnValidate: (value){
+          if (value == null || value.isEmpty){
+            return "Please Enter a Password";
+          } else if (value.length < 8){
+            return "Password must be 8 Characters Long";
+          } else {
+            return null;
+          }
+        },
       ),
   
-      SizedBox( height : 46.h ),
+      SizedBox( height : 40.h ),
       TaskMasterButton(
         taskMasterChild: openSans(
           "Sign Up",
@@ -134,10 +167,11 @@ class _SignUpPageState extends State<SignUpPage> {
         taskMasteraddBoxShadow: true,
         taskMasterColor: TaskMasterColor.coralRed,
         taskMasterOnTap: (){
-          TaskMasterNavigation.pSlideUpTransition(
-            context, 
-            destinationPage: const ForgotPasswordPage()
-          );
+          if (_formKey.currentState!.validate()){
+
+            
+            _formKey.currentState!.dispose();
+          }
         }
       ),
 

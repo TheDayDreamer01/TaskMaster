@@ -27,7 +27,6 @@ class TaskMasterNavigation{
   }
   
   static void pSlideUpTransition(BuildContext context, {required Widget destinationPage}) {
-
     Navigator.of(context).push(
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
@@ -45,7 +44,6 @@ class TaskMasterNavigation{
         },
       ),
     );
-
     return;
   }
 

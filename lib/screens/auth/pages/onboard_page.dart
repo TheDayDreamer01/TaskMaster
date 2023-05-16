@@ -56,7 +56,7 @@ class OnboardPage extends StatelessWidget {
                   childAnimationBuilder: (widget) => SlideAnimation(
                     verticalOffset: 40.0,
                     child : FadeInAnimation(                       
-                      duration : const Duration(milliseconds: 600),
+                      duration : const Duration(milliseconds: 480),
                       child : widget 
                     )
                   ),
@@ -118,14 +118,13 @@ class OnboardPage extends StatelessWidget {
             SizedBox( width : 10.w ),
             openSans(
               "Continue with Google",
-              fontSize: 18,
               fontWeight: FontWeight.w500
             )
           ]
         )
       ),
 
-      SizedBox( height : 16.h ),
+      SizedBox( height : 20.h ),
       TaskMasterButton(
         taskMasterOnTap: () =>TaskMasterNavigation.pSlideUpTransition(
           context, 

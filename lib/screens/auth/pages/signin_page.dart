@@ -24,6 +24,8 @@ class _SignInPageState extends State<SignInPage> {
 
   bool _isReveal = true;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _emailController = TextEditingController(text : "");
   final TextEditingController _passwordController = TextEditingController(text : "");
 
@@ -41,29 +43,30 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       appBar : AppBar(),
 
-      body : Padding(
+      body : SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: 18.w, 
           vertical: 30.h
         ),
 
-        child: SingleChildScrollView(
-          child: AnimationLimiter(
+        child: AnimationLimiter(
+          child: Form(
+            key : _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-        
+                  
               children : AnimationConfiguration.toStaggeredList(
                 duration : const Duration(milliseconds: 375),
-        
+                  
                 childAnimationBuilder : (widget) => SlideAnimation(
                   verticalOffset: 40.0,
-        
+                  
                   child : FadeInAnimation(
-                    duration : const Duration(milliseconds: 600),
+                    duration : const Duration(milliseconds: 480),
                     child : widget 
                   )
                 ),
-        
+                  
                 children : _appBuilder()
               ),
             ),
@@ -95,9 +98,21 @@ class _SignInPageState extends State<SignInPage> {
         taskMasterHintText: "Email Address",
         taskMasterIsFilled: true,
         taskMasterFillColor: TaskMasterColor.silver[50],
+        taskMasterOnValidate: (value){
+          String pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)";
+          final regExp = RegExp(pattern);
+
+          if (value == null || value.isEmpty){
+            return "Please Enter an Email Address";
+          } else if (!regExp.hasMatch(value)){
+            return "Please Enter a Valid Email Address";
+          } else {
+            return null;
+          }
+        },
       ),
       
-      SizedBox( height : 16.h ),
+      SizedBox( height : 20.h ),
       TaskMasterFormField(
         taskMasterIsObsecure: _isReveal,
         taskMasterFormController: _passwordController,
@@ -113,9 +128,16 @@ class _SignInPageState extends State<SignInPage> {
             color : TaskMasterColor.silver[900]
           )
         ),
+        taskMasterOnValidate: (value){
+          if (value == null || value.isEmpty){
+            return "Please Enter your Password";
+          } else {
+            return null;
+          }
+        },
       ),
 
-      SizedBox( height : 16.h ),
+      SizedBox( height : 18.h ),
       Align(
         alignment: Alignment.centerRight,
         child : GestureDetector(
@@ -133,15 +155,21 @@ class _SignInPageState extends State<SignInPage> {
         )
       ),
   
-      SizedBox( height : 46.h ),
+      SizedBox( height : 40.h ),
       TaskMasterButton(
         taskMasterChild: openSans(
-          "Sign Up",
-          color : Colors.white
+          "Sign In",
+          color : Colors.white,
+          fontWeight: FontWeight.w500
         ), 
         taskMasteraddBoxShadow: true,
         taskMasterColor: Colors.red[400],
-        taskMasterOnTap: (){}
+        taskMasterOnTap: (){
+          if (_formKey.currentState!.validate()){
+
+            _formKey.currentState!.dispose();
+          }
+        }
       ),
 
       SizedBox( height : 20.h ),

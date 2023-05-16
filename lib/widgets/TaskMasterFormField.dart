@@ -6,6 +6,7 @@ import "package:google_fonts/google_fonts.dart";
 class TaskMasterFormField extends StatelessWidget {
   
   final TextEditingController taskMasterFormController;
+  final FocusNode ? taskMasterFocusNode;
   final String taskMasterHintText;
   final bool taskMasterIsFilled;
   final bool taskMasterIsObsecure;
@@ -20,6 +21,7 @@ class TaskMasterFormField extends StatelessWidget {
   const TaskMasterFormField({ 
     Key ? key,
     required this.taskMasterFormController,
+    this.taskMasterFocusNode,
     this.taskMasterHintText = "",
     this.taskMasterMaxLines = 1,
     this.taskMasterIsFilled = false,
@@ -34,36 +36,33 @@ class TaskMasterFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return SizedBox(
-      height : 60.h,
+    return TextFormField(
+      focusNode: taskMasterFocusNode,
+      obscureText: taskMasterIsObsecure,
+      controller : taskMasterFormController,  
+      validator: taskMasterOnValidate,
 
-      child : TextFormField(
-        obscureText: taskMasterIsObsecure,
-        controller : taskMasterFormController,  
-        validator: taskMasterOnValidate,
+      maxLines: taskMasterMaxLines,
+      keyboardType: taskMasterTextInputType ,
 
-        maxLines: taskMasterMaxLines,
-        keyboardType: taskMasterTextInputType ,
+      style: GoogleFonts.openSans(
+        fontSize : 16.sp,
+        color : Colors.grey[900]
+      ),
 
-        style: GoogleFonts.openSans(
-          fontSize : 16.sp,
-          color : Colors.grey[900]
+      decoration : InputDecoration(
+        filled: taskMasterIsFilled,
+
+        alignLabelWithHint: true,
+        hintText : taskMasterHintText,
+        fillColor: taskMasterFillColor,
+
+        suffixIcon: taskMasterSuffix,
+      
+        hintStyle: GoogleFonts.openSans(
+          fontSize : 16.sp
         ),
 
-        decoration : InputDecoration(
-          filled: taskMasterIsFilled,
-
-          alignLabelWithHint: true,
-          hintText : taskMasterHintText,
-          fillColor: taskMasterFillColor,
-
-          suffixIcon: taskMasterSuffix,
-        
-          hintStyle: GoogleFonts.openSans(
-            fontSize : 16.sp
-          ),
-
-        )
       )
     );
   }

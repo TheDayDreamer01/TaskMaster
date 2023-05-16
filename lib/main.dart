@@ -16,14 +16,16 @@ import "package:taskmaster/screens/auth/pages/error_page.dart";
 import "package:taskmaster/screens/auth/pages/nowifi_page.dart";
 import "package:taskmaster/screens/auth/pages/loading_page.dart";
 
+
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp
-  ]);
+  await SystemChrome.setPreferredOrientations(
+    [DeviceOrientation.portraitUp]
+  );  
+
 
   runApp( 
     MultiProvider(
@@ -47,24 +49,25 @@ class TaskMasterApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return ScreenUtilInit(
-      designSize : const Size(411, 823),
-      builder : (context, child) => child!,
-      
-      child : Consumer<SettingsProvider>(
-        builder : (context, settingsProvider, child){
 
-          return Consumer<AuthProvider>(
-            builder: (context, authProvider, child) {
-              
-              return _mainAppBuilder(
-                authProvider : authProvider, 
-                settingsProvider : settingsProvider
-              );
-            }
-          );
-        }
-      )
+    ScreenUtil.init(
+      context, 
+      designSize: const Size(411, 823)
+    ); 
+
+    return Consumer<SettingsProvider>(
+      builder : (context, settingsProvider, child){
+    
+        return Consumer<AuthProvider>(
+          builder: (context, authProvider, child) {
+            
+            return _mainAppBuilder(
+              authProvider : authProvider, 
+              settingsProvider : settingsProvider
+            );
+          }
+        );
+      }
     );
   }
 
