@@ -109,16 +109,8 @@ class OnboardPage extends StatelessWidget {
 
       SizedBox(height : 40.h), 
       TaskMasterButton(
-        taskMasterOnTap: (){
-          
+        taskMasterOnTap: () {
           authProvider.signInWithGoogle();
-          
-          TaskMasterNavigation.prSlideUpTransition(
-            context, 
-            destinationPage: const AuthViewBuilder(
-              currentPage: OnboardPage()
-            )
-          );
         },
         taskMasterColor: TaskMasterColor.white,
         taskMasteraddBoxShadow: true,
@@ -140,9 +132,11 @@ class OnboardPage extends StatelessWidget {
 
       SizedBox( height : 20.h ),
       TaskMasterButton(
-        taskMasterOnTap: () =>TaskMasterNavigation.pSlideUpTransition(
+        taskMasterOnTap: () => TaskMasterNavigation.pSlideUpTransition(
           context, 
-          destinationPage: const SignUpPage()
+          destinationPage : const AuthViewBuilder(
+            currentPage: SignUpPage(),
+          )
         ),
         taskMasterBorderColor: TaskMasterColor.white,
         taskMasterChild: openSans(
@@ -154,4 +148,5 @@ class OnboardPage extends StatelessWidget {
       )
     ];
   }
+
 }

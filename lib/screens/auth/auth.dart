@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:firebase_core/firebase_core.dart";
+import "package:taskmaster/screens/auth/auth_builder.dart";
 
 import "package:taskmaster/screens/auth/pages/loading_page.dart";
 import "package:taskmaster/screens/auth/pages/onboard_page.dart";
@@ -14,7 +15,9 @@ class AuthView extends StatelessWidget {
 
       builder : (context, snapshot){
         if (snapshot.connectionState == ConnectionState.done){
-          return const OnboardPage();
+          return const AuthViewBuilder(
+            currentPage: OnboardPage()
+          );
         }
 
         else {
