@@ -8,11 +8,13 @@ import "package:google_fonts/google_fonts.dart";
 import "package:taskmaster/consts/color_const.dart"; 
 import "package:taskmaster/consts/font_const.dart";
 
-import "package:taskmaster/providers/auth_provider.dart";
 import "package:taskmaster/screens/auth/auth_builder.dart";
+import "package:taskmaster/screens/auth/pages/signup_page.dart";
+
 import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:taskmaster/widgets/TaskMasterNavigator.dart";
-import "package:taskmaster/screens/auth/pages/signup_page.dart";
+
+import "package:taskmaster/providers/auth_provider.dart";
 
 
 class OnboardPage extends StatelessWidget {
@@ -135,7 +137,8 @@ class OnboardPage extends StatelessWidget {
         taskMasterOnTap: () => TaskMasterNavigation.prSlideUpTransition(
           context, 
           destinationPage : const AuthViewBuilder(
-            currentPage: SignUpPage(),
+            isNewUser: true,
+            destinationPage: SignUpPage(),
           )
         ),
         taskMasterBorderColor: TaskMasterColor.white,

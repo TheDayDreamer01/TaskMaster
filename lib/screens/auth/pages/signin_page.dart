@@ -3,7 +3,6 @@ import "package:provider/provider.dart";
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
-import "package:taskmaster/providers/auth_provider.dart";
 
 import "package:taskmaster/screens/auth/auth_builder.dart";
 import "package:taskmaster/screens/auth/pages/forgot_password_page.dart";
@@ -17,6 +16,8 @@ import "package:taskmaster/consts/font_const.dart";
 import "package:taskmaster/widgets/TaskMasterFormField.dart";
 import "package:taskmaster/widgets/TaskMasterNavigator.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
+
+import "package:taskmaster/providers/auth_provider.dart";
 
 
 class SignInPage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
           appBarBackButton: () => TaskMasterNavigation.prSlideUpTransition(
             context, 
             destinationPage: const AuthViewBuilder(
-              currentPage: OnboardPage(),
+              destinationPage: OnboardPage(),
             )
           )
         )
@@ -205,7 +206,8 @@ class _SignInPageState extends State<SignInPage> {
             onTap : () => TaskMasterNavigation.prSlideUpTransition(
               context, 
               destinationPage: const AuthViewBuilder(
-                currentPage: SignUpPage(),
+                isNewUser: true,
+                destinationPage: SignUpPage(),
               )
             ),
             child: openSans(

@@ -7,6 +7,7 @@ class TaskMasterFormField extends StatelessWidget {
   
   final TextEditingController taskMasterFormController;
   final FocusNode ? taskMasterFocusNode;
+  final InputBorder ? taskMasterInputOutlineBorder;
   final String taskMasterHintText;
   final bool taskMasterIsFilled;
   final bool taskMasterIsObsecure;
@@ -21,6 +22,7 @@ class TaskMasterFormField extends StatelessWidget {
   const TaskMasterFormField({ 
     Key ? key,
     required this.taskMasterFormController,
+    this.taskMasterInputOutlineBorder, 
     this.taskMasterFocusNode,
     this.taskMasterHintText = "",
     this.taskMasterMaxLines = 1,
@@ -62,6 +64,8 @@ class TaskMasterFormField extends StatelessWidget {
         hintStyle: GoogleFonts.openSans(
           fontSize : 16.sp
         ),
+
+        border: taskMasterInputOutlineBorder
 
       )
     );

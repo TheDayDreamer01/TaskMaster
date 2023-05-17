@@ -5,6 +5,10 @@ import "package:taskmaster/services/authentication_service.dart";
 class AuthProvider with ChangeNotifier {
   final TaskMasterAuthentication _authService = TaskMasterAuthentication();
 
+  String get getEmail => _authService.taskMasterEmail;
+  String get getUserName => _authService.taskMasterUserName;
+  String get getProfile => _authService.taskMasterProfile;
+
   Future<UserCredential> signIn(String userEmail, String userPassword) async {
     try {
       UserCredential user = await _authService.taskMasterSignIn(userEmail, userPassword);

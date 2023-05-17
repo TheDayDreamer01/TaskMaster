@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
-import "package:flutter_svg/flutter_svg.dart";
 
 import "package:taskmaster/consts/color_const.dart";
 import "package:taskmaster/consts/font_const.dart";
+
 import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:taskmaster/widgets/TaskMasterFormField.dart";
 

@@ -6,6 +6,10 @@ class TaskMasterAuthentication {
   final _auth = FirebaseAuth.instance;
   final _google = GoogleSignIn();
 
+  String get taskMasterUserName =>  _auth.currentUser!.displayName!;
+  String get taskMasterEmail => _auth.currentUser!.email!;
+  String get taskMasterProfile => _auth.currentUser!.photoURL!;
+
   Future<UserCredential> taskMasterSignIn(String userEmail, userPassword) async {
     UserCredential user = await _auth.signInWithEmailAndPassword(
       email: userEmail, 

@@ -10,6 +10,7 @@ import "package:taskmaster/consts/light_theme_const.dart";
 
 import "package:taskmaster/providers/auth_provider.dart";
 import "package:taskmaster/providers/settings_provider.dart";
+import "package:taskmaster/providers/task_provider.dart";
 import "package:taskmaster/screens/auth/auth.dart";
 
 import "package:taskmaster/screens/auth/pages/error_page.dart";
@@ -31,13 +32,16 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create : (context) => SettingsProvider()
+          create : (context) => AuthProvider()
+        ),
+        
+        ChangeNotifierProvider(
+          create : (context) => TaskProvider()
         ),
 
         ChangeNotifierProvider(
-          create : (context) => AuthProvider()
+          create : (context) => SettingsProvider()
         ),
-
       ],
       child : const TaskMasterApp()
     )
@@ -61,9 +65,14 @@ class TaskMasterApp extends StatelessWidget{
         return Consumer<AuthProvider>(
           builder: (context, authProvider, child) {
             
-            return _mainAppBuilder(
-              authProvider : authProvider, 
-              settingsProvider : settingsProvider
+            return Consumer<TaskProvider>(
+              builder: (context, taskProvider, child) {
+                return _mainAppBuilder(
+                  authProvider : authProvider, 
+                  settingsProvider : settingsProvider,
+                  taskProvider : taskProvider
+                );
+              }
             );
           }
         );
@@ -73,7 +82,8 @@ class TaskMasterApp extends StatelessWidget{
 
   Widget _mainAppBuilder({
     required AuthProvider authProvider,
-    required SettingsProvider settingsProvider
+    required TaskProvider taskProvider,
+    required SettingsProvider settingsProvider,
   }){
     return MaterialApp(
       title : "Task Master",

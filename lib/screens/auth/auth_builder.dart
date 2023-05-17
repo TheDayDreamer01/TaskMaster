@@ -1,16 +1,21 @@
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+
 import "package:taskmaster/screens/auth/pages/error_page.dart";
 import "package:taskmaster/screens/auth/pages/loading_page.dart";
+import "package:taskmaster/screens/auth/pages/welcome_page.dart";
 import "package:taskmaster/screens/dashboard/dasboard.dart";
 
 
 class AuthViewBuilder extends StatelessWidget {
-  final Widget currentPage;
+  
+  final Widget destinationPage;
+  final bool isNewUser;
 
   const AuthViewBuilder({ 
     Key ? key, 
-    required this.currentPage
+    this.isNewUser = false,
+    required this.destinationPage
   }) : super(key : key);
 
   @override
@@ -28,11 +33,13 @@ class AuthViewBuilder extends StatelessWidget {
         }
 
         else if (snapshot.hasData){
-          return const DashboardView();
+          return (isNewUser) ? 
+            const WelcomePage() :
+            const DashboardView();
         }
 
         else {
-          return currentPage;
+          return destinationPage;
         }
       },
     );

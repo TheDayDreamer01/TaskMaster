@@ -16,7 +16,7 @@ class AuthView extends StatelessWidget {
       builder : (context, snapshot){
         if (snapshot.connectionState == ConnectionState.done){
           return const AuthViewBuilder(
-            currentPage: OnboardPage()
+            destinationPage: OnboardPage()
           );
         }
 
