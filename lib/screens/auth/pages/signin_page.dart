@@ -1,15 +1,22 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
-import "package:taskmaster/consts/color_const.dart";
-import "package:taskmaster/consts/font_const.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
+import "package:taskmaster/providers/auth_provider.dart";
+
+import "package:taskmaster/screens/auth/auth_builder.dart";
 import "package:taskmaster/screens/auth/pages/forgot_password_page.dart";
+import "package:taskmaster/screens/auth/pages/onboard_page.dart";
+import "package:taskmaster/screens/auth/widgets/appbar_widget.dart";
+import "package:taskmaster/screens/auth/pages/signup_page.dart";
+
+import "package:taskmaster/consts/color_const.dart";
+import "package:taskmaster/consts/font_const.dart";
 
 import "package:taskmaster/widgets/TaskMasterFormField.dart";
 import "package:taskmaster/widgets/TaskMasterNavigator.dart";
 import "package:taskmaster/widgets/TaskMasterButton.dart";
-import "package:taskmaster/screens/auth/pages/signup_page.dart";
 
 
 class SignInPage extends StatefulWidget {
@@ -41,12 +48,22 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context){
 
     return Scaffold(
-      appBar : AppBar(),
+      appBar : PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child : MyAppBarWidget(
+          appBarBackButton: () => TaskMasterNavigation.prSlideUpTransition(
+            context, 
+            destinationPage: const AuthViewBuilder(
+              currentPage: OnboardPage(),
+            )
+          )
+        )
+      ),
 
       body : SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: 18.w, 
-          vertical: 30.h
+          vertical: 20.h
         ),
 
         child: AnimationLimiter(
@@ -77,6 +94,7 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   List<Widget> _appBuilder(){
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return [
       robotoCondensed(
         "Welcome Back! Stay\non Top of Your Tasks",
@@ -166,7 +184,9 @@ class _SignInPageState extends State<SignInPage> {
         taskMasterColor: Colors.red[400],
         taskMasterOnTap: (){
           if (_formKey.currentState!.validate()){
-
+            authProvider.signIn(
+              _emailController.text.trim(), 
+              _passwordController.text.trim());
             _formKey.currentState!.dispose();
           }
         }
@@ -184,12 +204,14 @@ class _SignInPageState extends State<SignInPage> {
           GestureDetector(
             onTap : () => TaskMasterNavigation.prSlideUpTransition(
               context, 
-              destinationPage: const SignUpPage()
+              destinationPage: const AuthViewBuilder(
+                currentPage: SignUpPage(),
+              )
             ),
             child: openSans(
               "Sign Up",
               fontSize : 14.sp,
-              color : Colors.red[400]
+              color : TaskMasterColor.coralRed[400]
             ),
           )
         ]

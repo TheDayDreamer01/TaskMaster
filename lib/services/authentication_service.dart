@@ -4,6 +4,7 @@ import "package:google_sign_in/google_sign_in.dart";
 class TaskMasterAuthentication {
 
   final _auth = FirebaseAuth.instance;
+  final _google = GoogleSignIn();
 
   Future<UserCredential> taskMasterSignIn(String userEmail, userPassword) async {
     UserCredential user = await _auth.signInWithEmailAndPassword(
@@ -38,6 +39,12 @@ class TaskMasterAuthentication {
     await _auth.sendPasswordResetEmail(
       email: userEmail
     );
+    return;
+  }
+
+  Future<void> taskMasterSignOut() async {
+    await _auth.signOut();
+    await _google.signOut();
     return;
   }
 

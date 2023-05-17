@@ -124,6 +124,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           if (_formKey.currentState!.validate()){
 
             _formKey.currentState!.dispose();
+            Navigator.of(context).pop();
           }
         }
       ),

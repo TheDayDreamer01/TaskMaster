@@ -1,14 +1,20 @@
 import "package:flutter/material.dart";
+import "package:provider/provider.dart";
 import "package:flutter_feather_icons/flutter_feather_icons.dart";
-import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
+import "package:taskmaster/providers/auth_provider.dart";
+
+import "package:taskmaster/screens/auth/auth_builder.dart";
+import "package:taskmaster/screens/auth/pages/onboard_page.dart";
+import "package:taskmaster/screens/auth/widgets/appbar_widget.dart";
+import "package:taskmaster/screens/auth/pages/signin_page.dart";
 
 import "package:taskmaster/consts/color_const.dart";
 import "package:taskmaster/consts/font_const.dart";
 
+import "package:taskmaster/widgets/TaskMasterButton.dart";
 import "package:taskmaster/widgets/TaskMasterFormField.dart";
-import "package:taskmaster/screens/auth/pages/signin_page.dart";
 import "package:taskmaster/widgets/TaskMasterNavigator.dart";
 
 class SignUpPage extends StatefulWidget {
@@ -42,12 +48,22 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context){
 
     return Scaffold(
-      appBar : AppBar(),
+      appBar : PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child : MyAppBarWidget(
+          appBarBackButton: () => TaskMasterNavigation.prSlideUpTransition(
+            context, 
+            destinationPage: const AuthViewBuilder(
+              currentPage: OnboardPage(),
+            )
+          )
+        )
+      ),
 
       body : SingleChildScrollView(
         padding: EdgeInsets.symmetric(
           horizontal: 18.w, 
-          vertical: 30.h
+          vertical: 20.h
         ),
         
         child: AnimationLimiter(
@@ -78,6 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   List<Widget> _appBuilder(){
+    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return [
       robotoCondensed(
         "Get Started and\nOrganize Your Life",
@@ -109,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
         },
       ),
 
-      SizedBox( height : 16.h ),
+      SizedBox( height : 20.h ),
       TaskMasterFormField(
         taskMasterFormController: _emailController,
         taskMasterHintText: "Email Address",
@@ -168,7 +185,10 @@ class _SignUpPageState extends State<SignUpPage> {
         taskMasterColor: TaskMasterColor.coralRed,
         taskMasterOnTap: (){
           if (_formKey.currentState!.validate()){
-
+            authProvider.signUp(
+              _userNameController.text.trim(),
+              _emailController.text.trim(), 
+              _passwordController.text.trim());
             
             _formKey.currentState!.dispose();
           }
@@ -187,12 +207,14 @@ class _SignUpPageState extends State<SignUpPage> {
           GestureDetector(
             onTap : () => TaskMasterNavigation.prSlideUpTransition(
               context, 
-              destinationPage: const SignInPage()
+              destinationPage: const AuthViewBuilder(
+                currentPage: SignInPage(),
+              )
             ),
             child: openSans(
               "Sign In",
               fontSize : 14.sp,
-              color : Colors.red[400]
+              color : TaskMasterColor.coralRed[400]
             ),
           )
         ]

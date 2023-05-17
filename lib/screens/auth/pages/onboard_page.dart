@@ -87,7 +87,7 @@ class OnboardPage extends StatelessWidget {
             TextSpan( 
               text : "TaskMaster\n",
               style :  TextStyle(
-                color : TaskMasterColor.coralRed
+                color : TaskMasterColor.coralRed,
               )
             ),
 
@@ -132,7 +132,7 @@ class OnboardPage extends StatelessWidget {
 
       SizedBox( height : 20.h ),
       TaskMasterButton(
-        taskMasterOnTap: () => TaskMasterNavigation.pSlideUpTransition(
+        taskMasterOnTap: () => TaskMasterNavigation.prSlideUpTransition(
           context, 
           destinationPage : const AuthViewBuilder(
             currentPage: SignUpPage(),

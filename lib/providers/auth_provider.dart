@@ -17,9 +17,10 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<UserCredential> signUp(String userEmail, String userPassword) async {
+  Future<UserCredential> signUp(String userName, String userEmail, String userPassword) async {
     try {
       UserCredential newUser = await _authService.taskMasterSignUp(userEmail, userPassword);
+      await newUser.user?.updateDisplayName(userName);
       notifyListeners();
       return newUser;
     } catch (e) {
@@ -48,6 +49,17 @@ class AuthProvider with ChangeNotifier {
     } catch (e) {
       // Handle any errors
       print("Error resetting password: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _authService.taskMasterSignOut();
+      notifyListeners();
+    } catch (e){
+      
+      print("Error in Signing out: $e");
       rethrow;
     }
   }
