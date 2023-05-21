@@ -81,27 +81,13 @@ class OnboardPage extends StatelessWidget {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return [
-
-      RichText(
-        text : TextSpan(
-          children : [
-            const TextSpan( text : "Welcome to " ),
-            TextSpan( 
-              text : "TaskMaster\n",
-              style :  TextStyle(
-                color : TaskMasterColor.coralRed,
-              )
-            ),
-
-            const TextSpan( text : "Your Ultimate Todo App"),
-          ],
-          style : GoogleFonts.robotoCondensed(
-            fontSize : 30,
-            fontWeight: FontWeight.w600,
-            color : TaskMasterColor.white
-          )
-        )
-      ),
+      
+      robotoCondensed(
+        "Welcome to TaskMaster\nYour Ultimate Todo App",
+        fontSize : 30,
+        fontWeight: FontWeight.w600,
+        color : TaskMasterColor.white
+      ),  
 
       SizedBox( height : 10.h),
       openSans(

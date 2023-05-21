@@ -1,78 +1,82 @@
 import "package:flutter/material.dart";
-import "package:provider/provider.dart";
-import "package:flutter_screenutil/flutter_screenutil.dart";
-import "package:flutter_staggered_animations/flutter_staggered_animations.dart";
+import "package:flutter_feather_icons/flutter_feather_icons.dart";
+import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
+import "package:taskmaster/consts/color_const.dart";
+import "package:taskmaster/screens/dashboard/page/activity_page.dart";
+import "package:taskmaster/screens/dashboard/page/calendar_page.dart";
+import "package:taskmaster/screens/dashboard/page/home_page.dart";
+import "package:taskmaster/screens/dashboard/page/settings_page.dart";
 
-import "package:taskmaster/providers/auth_provider.dart";
-import "package:taskmaster/screens/dashboard/widgets/appbar_widget.dart";
-import "package:taskmaster/widgets/TaskMasterFormField.dart";
 
+class DashboardView extends StatelessWidget {
+  
+  final PersistentTabController _controller = PersistentTabController();
+  
+  DashboardView({ Key ? key }) : super(key : key);
 
-class DashboardView extends StatefulWidget {
-  const DashboardView({ Key ? key }) : super(key : key);
+  List<Widget> _buildScreens() {
+    return [
+      const HomePage(),
+      const CalendarPage(),
+      const ActivityPage(),
+      const SettingsPage()
+    ];
+  }
 
-  @override
-  State<DashboardView> createState() => _DashboardViewState();
-}
-
-class _DashboardViewState extends State<DashboardView> {
-
-  final TextEditingController _itemController = TextEditingController(text : "");
-
-  @override
-  void dispose(){
-    super.dispose();
-    _itemController.dispose();
-    return;
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+        PersistentBottomNavBarItem(
+            icon: const Icon(FeatherIcons.home),
+            title: ("Home"),
+            activeColorPrimary: TaskMasterColor.coralRed,
+            inactiveColorPrimary: TaskMasterColor.grey,
+        ),
+        PersistentBottomNavBarItem(
+            icon: const Icon(FeatherIcons.calendar),
+            title: ("Celendar"),
+            activeColorPrimary: TaskMasterColor.coralRed,
+            inactiveColorPrimary: TaskMasterColor.grey,
+        ),
+        PersistentBottomNavBarItem(
+            icon: const Icon(FeatherIcons.activity),
+            title: ("Activity"),
+            activeColorPrimary: TaskMasterColor.coralRed,
+            inactiveColorPrimary: TaskMasterColor.grey,
+        ),
+        PersistentBottomNavBarItem(
+            icon: const Icon(FeatherIcons.settings),
+            title: ("Settings"),
+            activeColorPrimary: TaskMasterColor.coralRed,
+            inactiveColorPrimary: TaskMasterColor.grey,
+        ),
+    ];
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body : SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: 18.w, 
-          vertical: 20.h
+  Widget build(BuildContext context){
+    return PersistentTabView(
+        context,
+        controller: _controller,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        backgroundColor: TaskMasterColor.white!,
+        resizeToAvoidBottomInset: true,
+        hideNavigationBarWhenKeyboardShows: true,
+        popAllScreensOnTapOfSelectedTab: true,
+        popActionScreens: PopActionScreensType.all,
+        
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
         ),
 
-        child : SafeArea(
-          child: AnimationLimiter(
-            child : Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              
-              children : AnimationConfiguration.toStaggeredList(
-                childAnimationBuilder : (widget){
-                  
-                  return SlideAnimation(
-                    duration : const Duration(milliseconds: 375),
-                    horizontalOffset: 40.0,
-        
-                    child : FadeInAnimation(
-                      duration : const Duration(milliseconds: 480),
-                      child : widget
-                    )
-                  );
-                }, 
-                
-                children: _appBuilder(context)
-              )
-            )
-          ),
-        )
-      ),
+        screenTransitionAnimation: const ScreenTransitionAnimation( 
+          animateTabTransition: true,
+          curve: Curves.ease,
+          duration: Duration(milliseconds: 200),
+        ),
 
+        navBarStyle: NavBarStyle.style12, 
     );
-  }
-
-  List<Widget> _appBuilder(BuildContext context){
-    final AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    return [
-      MyAppBarWidget(
-        appBarUserName: authProvider.getUserName, 
-        appBarProfile: "" // authProvider.getProfile
-      ),
-
-      SizedBox(height : 20.h),
-    ];
   }
 }

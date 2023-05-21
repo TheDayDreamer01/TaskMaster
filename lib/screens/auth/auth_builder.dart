@@ -35,7 +35,7 @@ class AuthViewBuilder extends StatelessWidget {
         else if (snapshot.hasData){
           return (isNewUser) ? 
             const WelcomePage() :
-            const DashboardView();
+            DashboardView();
         }
 
         else {

@@ -199,7 +199,7 @@ class _SignInPageState extends State<SignInPage> {
         children : [
           openSans(
             "Don't have an Account? ",
-            fontSize : 14.sp
+            fontSize : 14
           ),
   
           GestureDetector(
@@ -212,7 +212,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
             child: openSans(
               "Sign Up",
-              fontSize : 14.sp,
+              fontSize : 14,
               color : TaskMasterColor.coralRed[400]
             ),
           )

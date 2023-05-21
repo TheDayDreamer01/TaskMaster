@@ -27,13 +27,13 @@ class MyAppBarWidget extends StatelessWidget {
           children : [
             openSans(
               "Hello,",
-              fontSize : 24.sp,
+              fontSize : 20,
               color: TaskMasterColor.silver[200],
               fontWeight: FontWeight.w500
             ),
             openSans(
               appBarUserName,
-              fontSize : 28.sp,
+              fontSize : 30,
               color: TaskMasterColor.coralRed[400],
               fontWeight: FontWeight.w600
 
