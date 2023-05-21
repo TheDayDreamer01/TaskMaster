@@ -22,11 +22,9 @@ Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp]
   );  
-
 
   runApp( 
     MultiProvider(
@@ -59,32 +57,26 @@ class TaskMasterApp extends StatelessWidget{
       designSize: const Size(411, 823)
     ); 
 
-    return Consumer<SettingsProvider>(
-      builder : (context, settingsProvider, child){
-    
-        return Consumer<AuthProvider>(
-          builder: (context, authProvider, child) {
-            
-            return Consumer<TaskProvider>(
-              builder: (context, taskProvider, child) {
-                return _mainAppBuilder(
-                  authProvider : authProvider, 
-                  settingsProvider : settingsProvider,
-                  taskProvider : taskProvider
-                );
-              }
-            );
-          }
-        );
-      }
+    return MultiProvider( 
+      providers : [
+        Consumer<SettingsProvider>(
+          builder : (context, settingsProvider, child) => child!
+        ),
+
+        Consumer<AuthProvider>(
+          builder: (context, authProvider, child) => child!
+        ),
+
+        Consumer<TaskProvider>(
+          builder: (context, authProvider, child) => child!
+        )
+      ],
+      child : _mainAppBuilder(context)
     );
   }
 
-  Widget _mainAppBuilder({
-    required AuthProvider authProvider,
-    required TaskProvider taskProvider,
-    required SettingsProvider settingsProvider,
-  }){
+  Widget _mainAppBuilder(BuildContext context){
+    final SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context);
     return MaterialApp(
       title : "Task Master",
       debugShowCheckedModeBanner: false,
